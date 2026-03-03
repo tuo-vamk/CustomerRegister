@@ -18,15 +18,13 @@ function displayCustomers(customers) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+$(document).ready(function() {
     console.log('Page ready, fetching customers...');
     fetchCustomers();
-});
 
-$(document).ready(function() {
-            // Lisätään tapahtumankäsittelijä napille
-            $('#toggleButton').click(function() {
-                // Käytetään toggle() toimintoa divin näyttämiseen/piilottamiseen
-                $('#myDiv').toggle();
-            });
-        });
+    // Lisätään tapahtumankäsittelijä napille
+    $('#toggleButton').click(function() {
+        // Käytetään toggle() toimintoa divin näyttämiseen/piilottamiseen
+        $('#myDiv').toggle();
+    });
+});
