@@ -1,0 +1,20 @@
+/* Customer Care Styles */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+#myDiv {
+    width: 300px;
+    height: 200px;
+    background-color: lightblue;
+    display: none; /* Div on aluksi piilotettu */
+    text-align: center;
+    line-height: 200px;
+}
