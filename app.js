@@ -9,11 +9,18 @@ async function fetchCustomers() {
 }
 
 function displayCustomers(customers) {
-    const customerList = document.querySelector('ul');
+    const customerList = document.getElementById('customerList');
     customerList.innerHTML = '';
     customers.forEach(customer => {
         const li = document.createElement('li');
         li.textContent = `${customer.first_name} ${customer.last_name} - ${customer.email}`;
+        
+        const button = document.createElement('button');
+        button.textContent = 'Show More Info';
+        button.style.marginLeft = '10px';
+        button.addEventListener('click', () => fetchCustomerDetails(customer.id));
+        
+        li.appendChild(button);
         customerList.appendChild(li);
     });
 }
@@ -38,12 +45,10 @@ async function fetchCustomerDetails(customerId) {
 }
 
 $(document).ready(function() {
-    console.log('Page ready, fetching customers...');
     fetchCustomers();
 
-    // Lisätään tapahtumankäsittelijä napille
+    //Toggle button functionality
     $('#toggleButton').click(function() {
-        // Käytetään toggle() toimintoa divin näyttämiseen/piilottamiseen
         $('#myDiv').toggle();
     });
 });
