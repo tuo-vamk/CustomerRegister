@@ -18,6 +18,25 @@ function displayCustomers(customers) {
     });
 }
 
+async function fetchCustomerDetails(customerId) {
+    try {
+        const response = await fetch(`https://www.cc.puv.fi/~hmh/fed/fedApi/hae_asiakas/?id=${customerId}`);
+        const customerData = (await response.json())[0];
+        
+        const info = `
+            Customer Details:
+            Name: ${customerData.first_name} ${customerData.last_name}
+            Email: ${customerData.email}
+            Phone: ${customerData.phone || 'N/A'}
+            Address: ${customerData.address || 'N/A'}`.trim();
+        
+        alert(info);
+    } catch (error) {
+        console.error('Error fetching customer details:', error);
+        alert('Error fetching customer details. Please try again.');
+    }
+}
+
 $(document).ready(function() {
     console.log('Page ready, fetching customers...');
     fetchCustomers();
