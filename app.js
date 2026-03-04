@@ -9,19 +9,19 @@ async function fetchCustomers() {
 }
 
 function displayCustomers(customers) {
-    const customerList = document.getElementById('customerList');
-    customerList.innerHTML = '';
+    const customerList = $('#customerList');
+    customerList.empty();
     customers.forEach(customer => {
-        const li = document.createElement('li');
-        li.textContent = `${customer.first_name} ${customer.last_name} - ${customer.email}`;
+        const li = $('<li>');
+        li.text(`${customer.first_name} ${customer.last_name} - ${customer.email}`);
         
-        const button = document.createElement('button');
-        button.textContent = 'Show More Info';
-        button.style.marginLeft = '10px';
-        button.addEventListener('click', () => fetchCustomerDetails(customer.id));
+        const button = $('<button>');
+        button.text('Show More Info');
+        button.css('margin-left', '10px');
+        button.click(() => fetchCustomerDetails(customer.id));
         
-        li.appendChild(button);
-        customerList.appendChild(li);
+        li.append(button);
+        customerList.append(li);
     });
 }
 
