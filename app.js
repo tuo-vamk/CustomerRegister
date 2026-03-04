@@ -1,7 +1,6 @@
 async function fetchCustomers() {
     try {
-        const response = await fetch('https://www.cc.puv.fi/~hmh/fed/fedApi/hae_asiakas/');
-        const customers = await response.json();
+        const customers = await $.get('https://www.cc.puv.fi/~hmh/fed/fedApi/hae_asiakas/');
         displayCustomers(customers);
     } catch (error) {
         console.error('Error fetching customers:', error);
@@ -27,8 +26,7 @@ function displayCustomers(customers) {
 
 async function fetchCustomerDetails(customerId) {
     try {
-        const response = await fetch(`https://www.cc.puv.fi/~hmh/fed/fedApi/hae_asiakas/?id=${customerId}`);
-        const customerData = (await response.json())[0];
+        const customerData = (await $.get(`https://www.cc.puv.fi/~hmh/fed/fedApi/hae_asiakas/?id=${customerId}`))[0];
         
         const info = `
             Customer Details:
