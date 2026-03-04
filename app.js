@@ -9,7 +9,7 @@ async function fetchCustomers() {
 }
 
 function displayCustomers(customers) {
-    const customerList = document.querySelector('ul');
+    const customerList = document.getElementById('customerList');
     customerList.innerHTML = '';
     customers.forEach(customer => {
         const li = document.createElement('li');
@@ -46,7 +46,6 @@ Address: ${customerData.address || 'N/A'}
 }
 
 $(document).ready(function() {
-    console.log('Page ready, fetching customers...');
     fetchCustomers();
 
     //Toggle button functionality
