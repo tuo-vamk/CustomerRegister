@@ -15,8 +15,15 @@ function displayCustomers(customers) {
         li.text(`${customer.first_name} ${customer.last_name} - ${customer.email}`);
         
         const button = $('<button>');
-        button.text('Show More Info');
-        button.css('margin-left', '10px');
+        button.text('i');
+        button.css({
+            'margin-left': '10px',
+            'width': '25px',
+            'height': '25px',
+            'border-radius': '50%',
+            'font-weight': 'bold',
+            'cursor': 'pointer'
+        });
         button.click(() => fetchCustomerDetails(customer.id));
         
         li.append(button);
@@ -53,15 +60,17 @@ $(document).ready(function() {
             buttonText();
         });
     });
-
-    $('#myForm').submit(function(event) {
+    
+    $('#addCustomerForm').submit(function(event) {
         event.preventDefault();
+
         const formData = $(this).serialize();
+        const form = this;
         $.post('https://www.cc.puv.fi/~hmh/fed/fedApi/lisaa_asiakas/', formData)
             .done(function() {
                 alert('Customer added successfully.');
                 fetchCustomers();
-                $(this).trigger('reset');
+                form.reset();
             })
             .fail(function() {
                 alert('Error adding customer. Please try again.');
