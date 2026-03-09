@@ -48,13 +48,30 @@ $(document).ready(function() {
 
     //Toggle button functionality
     $('#toggleButton').click(function() {
-        $('#myDiv').slideToggle(400);
-        buttonText();
+        $('#myDiv').slideToggle(400, function () {
+            // This runs after the slide animation completes
+            buttonText();
+        });
+    });
+
+    $('#myForm').submit(function(event) {
+        event.preventDefault();
+        const formData = $(this).serialize();
+        $.post('https://www.cc.puv.fi/~hmh/fed/fedApi/lisaa_asiakas/', formData)
+            .done(function() {
+                alert('Customer added successfully.');
+                fetchCustomers();
+                $(this).trigger('reset');
+            })
+            .fail(function() {
+                alert('Error adding customer. Please try again.');
+            });
     });
 });
 
 function buttonText() {
-    if ($('#myDiv').is(':visible')) {
+    const isVisible = $('#myDiv').is(':visible');
+    if (isVisible) {
         $('#toggleButton').text('Hide Add Customer Form');
     } else {
         $('#toggleButton').text('Show Add Customer Form');
