@@ -8,10 +8,28 @@
 </head>
 <body> 
     <h1>Welcome to Customer Care</h1>
-    <button id="toggleButton">Show / Hide Div</button>
-    <div id="myDiv">This is a togglable div!</div> 
-    <ul id="customerList"> 
-    </ul>
+    <div class="container">
+        <div class="left-column">
+            <button id="toggleButton"></button>
+            <div id="myDiv">
+                <form action="https://www.cc.puv.fi/~hmh/fed/fedApi/lisaa_asiakas/" method="POST">
+                    <input type="text" name="first_name" placeholder="First Name" required>
+                    <input type="text" name="last_name" placeholder="Last Name" required>
+                    <input type="text" name="email" placeholder="Email" required>
+                    <input type="text" name="phone" placeholder="Phone" required>
+                    <input type="text" name="address" placeholder="Address" required>
+                    <input type="text" name="city" placeholder="City" required>
+                    <input type="text" name="country" placeholder="Country" required>
+                    <input type="hidden" name="saltsu" value="Vamk6000">
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+        <div class="right-column">
+            <ul id="customerList"> 
+            </ul>
+        </div>
+    </div>
     <script src="app.js"></script>
 </body>
 </html>

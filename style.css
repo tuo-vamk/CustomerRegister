@@ -10,11 +10,48 @@ h1 {
     color: #333;
 }
 
+.container {
+    display: flex;
+    gap: 20px;
+}
+
+.left-column {
+    flex: 1;
+    max-width: 400px;
+}
+
+.right-column {
+    flex: 2;
+}
+
 #myDiv {
     width: 300px;
-    height: 200px;
     background-color: lightblue;
-    display: none; /* Div on aluksi piilotettu */
-    text-align: center;
-    line-height: 200px;
+    display: none; /* Div hidden by default */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#myDiv form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#myDiv input[type="text"] {
+    padding: 8px;
+    font-size: 14px;
+}
+
+#myDiv button[type="submit"] {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+#myDiv button[type="submit"]:hover {
+    background-color: #45a049;
 }

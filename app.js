@@ -44,9 +44,19 @@ async function fetchCustomerDetails(customerId) {
 
 $(document).ready(function() {
     fetchCustomers();
+    buttonText();
 
     //Toggle button functionality
     $('#toggleButton').click(function() {
-        $('#myDiv').toggle();
+        $('#myDiv').slideToggle(400);
+        buttonText();
     });
 });
+
+function buttonText() {
+    if ($('#myDiv').is(':visible')) {
+        $('#toggleButton').text('Hide Add Customer Form');
+    } else {
+        $('#toggleButton').text('Show Add Customer Form');
+    }
+}
