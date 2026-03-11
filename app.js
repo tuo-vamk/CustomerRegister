@@ -1,16 +1,25 @@
+let allCustomers = [];
+let currentPage = 1;
+const customersPerPage = 20;
+
 async function fetchCustomers() {
     try {
-        const customers = await $.get('https://www.cc.puv.fi/~hmh/fed/fedApi/hae_asiakas/');
-        displayCustomers(customers);
+        allCustomers = await $.get('https://www.cc.puv.fi/~hmh/fed/fedApi/hae_asiakas/');
+        displayCustomers();
     } catch (error) {
         console.error('Error fetching customers:', error);
     }
 }
 
-function displayCustomers(customers) {
+function displayCustomers() {
     const customerList = $('#customerList');
     customerList.empty();
-    customers.forEach(customer => {
+    
+    const startIndex = (currentPage - 1) * customersPerPage;
+    const endIndex = startIndex + customersPerPage;
+    const customersToDisplay = allCustomers.slice(startIndex, endIndex);
+    
+    customersToDisplay.forEach(customer => {
         const li = $('<li>');
         li.text(`${customer.first_name} ${customer.last_name} - ${customer.email}`);
         
@@ -40,6 +49,34 @@ function displayCustomers(customers) {
         li.append(deleteButton);
         customerList.append(li);
     });
+    
+    displayPagination();
+}
+
+function displayPagination() {
+    // Remove existing pagination first
+    $('.pagination').remove();
+    
+    const totalPages = Math.ceil(allCustomers.length / customersPerPage);
+    let paginationHtml = '<div class="pagination">';
+    
+    if (currentPage > 1) {
+        paginationHtml += '<button onclick="changePage(' + (currentPage - 1) + ')">Previous</button>';
+    }
+    
+    paginationHtml += '<span> Page ' + currentPage + ' of ' + totalPages + ' </span>';
+    
+    if (currentPage < totalPages) {
+        paginationHtml += '<button onclick="changePage(' + (currentPage + 1) + ')">Next</button>';
+    }
+    
+    paginationHtml += '</div>';
+    $('.right-column').append(paginationHtml);
+}
+
+function changePage(page) {
+    currentPage = page;
+    displayCustomers();
 }
 
 async function fetchCustomerDetails(customerId) {
