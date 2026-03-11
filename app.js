@@ -1,6 +1,7 @@
 let allCustomers = [];
 let currentPage = 1;
 const customersPerPage = 20;
+let searchTerm = '';
 
 async function fetchCustomers() {
     try {
@@ -11,13 +12,24 @@ async function fetchCustomers() {
     }
 }
 
+function getFilteredCustomers() {
+    if (!searchTerm) {
+        return allCustomers;
+    }
+    return allCustomers.filter(customer => {
+        const fullName = `${customer.first_name} ${customer.last_name}`.toLowerCase();
+        return fullName.includes(searchTerm.toLowerCase());
+    });
+}
+
 function displayCustomers() {
     const customerList = $('#customerList');
     customerList.empty();
     
+    const filteredCustomers = getFilteredCustomers();
     const startIndex = (currentPage - 1) * customersPerPage;
     const endIndex = startIndex + customersPerPage;
-    const customersToDisplay = allCustomers.slice(startIndex, endIndex);
+    const customersToDisplay = filteredCustomers.slice(startIndex, endIndex);
     
     customersToDisplay.forEach(customer => {
         const li = $('<li>');
@@ -57,7 +69,8 @@ function displayPagination() {
     // Remove existing pagination first
     $('.pagination').remove();
     
-    const totalPages = Math.ceil(allCustomers.length / customersPerPage);
+    const filteredCustomers = getFilteredCustomers();
+    const totalPages = Math.ceil(filteredCustomers.length / customersPerPage);
     let paginationHtml = '<div class="pagination">';
     
     if (currentPage > 1) {
@@ -121,6 +134,13 @@ $(document).ready(function() {
             // This runs after the slide animation completes
             buttonText();
         });
+    });
+    
+    // Search functionality
+    $('#searchInput').on('input', function() {
+        searchTerm = $(this).val();
+        currentPage = 1; // Reset to first page when searching
+        displayCustomers();
     });
     
     $('#addCustomerForm').submit(function(event) {
