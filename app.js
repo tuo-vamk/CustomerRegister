@@ -14,9 +14,9 @@ function displayCustomers(customers) {
         const li = $('<li>');
         li.text(`${customer.first_name} ${customer.last_name} - ${customer.email}`);
         
-        const button = $('<button>');
-        button.text('i');
-        button.css({
+        const infoButton = $('<button>');
+        infoButton.text('i');
+        infoButton.css({
             'margin-left': '10px',
             'width': '25px',
             'height': '25px',
@@ -24,9 +24,20 @@ function displayCustomers(customers) {
             'font-weight': 'bold',
             'cursor': 'pointer'
         });
-        button.click(() => fetchCustomerDetails(customer.id));
+        infoButton.click(() => fetchCustomerDetails(customer.id));
         
-        li.append(button);
+        const deleteButton = $('<button>');
+        deleteButton.text('Delete');
+        deleteButton.css({
+            'margin-left': '10px',
+            'background-color': '#f44336',
+            'color': 'white',
+            'cursor': 'pointer'
+        });
+        deleteButton.click(() => deleteCustomer(customer.id));
+        
+        li.append(infoButton);
+        li.append(deleteButton);
         customerList.append(li);
     });
 }
@@ -37,6 +48,7 @@ async function fetchCustomerDetails(customerId) {
         
         const info = `
             Customer Details:
+            Id: ${customerData.id}
             Name: ${customerData.first_name} ${customerData.last_name}
             Email: ${customerData.email}
             Phone: ${customerData.phone || 'N/A'}
@@ -46,6 +58,19 @@ async function fetchCustomerDetails(customerId) {
     } catch (error) {
         console.error('Error fetching customer details:', error);
         alert('Error fetching customer details. Please try again.');
+    }
+}
+
+async function deleteCustomer(customerId) {
+    if (confirm('Are you sure you want to delete this customer?')) {
+        try {
+            await $.get(`https://www.cc.puv.fi/~hmh/fed/fedApi/poista_asiakas/?saltsu=Vamk6000&id=${customerId}`);
+            alert('Customer deleted successfully.');
+            fetchCustomers();
+        } catch (error) {
+            console.error('Error deleting customer:', error);
+            alert('Error deleting customer. Please try again.');
+        }
     }
 }
 
